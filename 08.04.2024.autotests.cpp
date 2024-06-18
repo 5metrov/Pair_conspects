@@ -1,8 +1,29 @@
+/*
+simple example off testing funk:
+int sum(int a, int b) {
+    return a + b;
+}
+void sum_test(int a, int b, int itog) {
+    cout << "Было введено: a = " << a << '\t' << "b = " << b << endl;
+    cout << "Ожидаемый итог: " << itog << endl << "Фактический итог: " << a + b << endl;
+    if ((a + b) == itog) {
+        cout << "Сложение происходит корректно" << endl;
+    }
+    else { 
+        cout << "Сложение происходит НЕ корректно" << endl;
+    }
+}
+int main(){
+    setlocale(LC_ALL, "ru");
+    sum_test(7, 3, 10);
+    sum_test(2, 6, 13);
+    return 0;;
+}
+*/
 #include <iostream>
 #include <string>
 using namespace std;
 //a++ - постфиксный инкремент - сначала выполняется всё выражение, после постфиксный инкремент. ++a - префексный инкремент, сначала происходит инкремент, после выполняется всё выражение.
-
 //тз - создать автотест для данной функции
 string get_str(int num) {
     string str;
