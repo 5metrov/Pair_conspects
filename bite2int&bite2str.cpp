@@ -12,38 +12,21 @@ using std::string;
 using std::vector;
 using std::cin;
 
-static class Ten2two {
+static class Num2bin {
 public:
-    static std::string ten2two(int ten) {
+    static std::string ten2bin(int num) {
         std::ostringstream stream;
-        stream << std::bitset<8>(ten);
+        stream << std::bitset<8>(num);
         return stream.str();
     }
 };
 
-static class Two2ten {
+static class Bin2num {
 public:
-    static int two2ten(string two) {
-        /*bool num_started = 0; //флажок для корректной работы цикла дальше
-        string pre_itog; //будущее число без нулей в начале
-        for (int i = 0; i < size(two); i++) { //этот цикл отбрасывает нули из начала числа
-            if (!num_started) {
-                if (two[i] == '0') {
-                    continue;
-                }
-                else {
-                    num_started = 1;
-                    pre_itog += two[i];
-                }
-            }
-            else {
-                pre_itog += two[i];
-            }
-        }*/
-
+    static int bin2ten(string two) {
         int itog = 0;
         int multiplier = 1;
-        int vrem_num_holder = stoi(two); //перезпись со строки в инт для более дуобной работы с переменной
+        int vrem_num_holder = stoi(two); //перезпись со строки в инт для более удобной работы с переменной
         for (int i = 0; i < size(two); i++) { //в данном цикле идёт перевод числа из двоичной системы в десятичную
             if (vrem_num_holder % 10 == 1) {
                 itog += multiplier;
@@ -56,13 +39,14 @@ public:
 };
 
 void osn0() {
-    PRINT(Ten2two::ten2two(70));
-    PRINT(Two2ten::two2ten("1111"));
+    //here is some tests 
+    PRINT(Num2bin::ten2bin(70));
+    PRINT(Bin2num::bin2ten("1111"));
 }
 
-static class Word2two {
+static class Word2bin {
 public:
-    static string word2two(string word) {
+    static string word2bin(string word) {
         std::ostringstream stream;
         for (char letter : word) {
             stream << std::bitset<8>(letter);
@@ -71,32 +55,31 @@ public:
     }
 };
 
-static class Two2Word {
+static class Bin2Word {
 public:
-    static string two2Word(string two) {
+    static string bin2word(string two) {
         string itog = "";
         int size_str = two.length();
-        int dd = sizeof(4);
-        int twoi = stoi(two);
-        for (int i = 0; i < size_str / 8; i++) {
-            int tmp_int = (twoi % 100000000);
-            itog += Two2ten::two2ten(std::to_string(twoi));
-            twoi / 100000000;
+
+        for (int i = 0; i < size_str; i += 8) {
+            string byte_str = two.substr(i, 8); // отсекаем сегмент из 8ми бит
+            int char_code = Bin2num::bin2ten(byte_str); // конвертим в десятичный код аски
+            itog += static_cast<char>(char_code); // добавляем в строку
         }
         return itog;
     }
 };
 
 void osn1() {
-    PRINT(Word2two::word2two("hello"));
-    std::string str = Word2two::word2two("H");
-    PRINT(Two2Word::two2Word(str));
+    //here is some tests
+    PRINT(Word2bin::word2bin("hello"));
+    cout << Word2bin::word2bin(Bin2Word::bin2word("0110100001100101011011000110110001101111")) << endl; //"hello" in binary
+    PRINT(Bin2Word::bin2word(Word2bin::word2bin("Hello i am working")));
 }
 
-int main(){
+int main() {
     setlocale(0, "ru");
     srand(time(NULL));
     osn1();
     return 0;
 }
-
